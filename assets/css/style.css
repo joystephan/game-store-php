@@ -1,0 +1,347 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Adjust h1 to be centered and larger */
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 2rem;
+}
+
+/* Hero Section */
+.hero {
+    padding-top: 4rem; 
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Adjust based on desired height */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;  
+    justify-content: center;
+    align-items: center;
+    background-color: #000; /* Optional: fallback color */
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 15%; /* Adjust for how much blur you want */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #121212 100%);
+    z-index: 2; /* Ensure it's above the image but below text */
+}
+
+.hero h1 {
+    position: absolute; /* Position the text relative to the hero */
+    color: #ffffff; /* White for contrast */
+    font-size: 2.5rem; /* Adjust as needed */
+    text-align: center;
+    z-index: 10; /* Bring the text above the image */
+    background: rgba(0, 0, 0, 0.5); /* Optional: Add a translucent background */
+    padding: 0.5rem 1rem; /* Add padding for better visibility */
+    border-radius: 8px; /* Optional: Rounded corners */
+}
+
+.hero-image {
+    position: absolute;
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    max-height: 100vh; /* Prevent overflow */
+    object-fit: cover; /* Cover the container */
+    display: block;
+    z-index: 1;
+}
+
+.hero-content h1 {
+    color: #00ddff;
+    font-size: 3rem;
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 10%; /* Adjust this based on where you want it */
+    transform: translateY(-50%);
+    color: #ffffff;
+    text-align: left;
+    max-width: 500px; /* Adjust based on your preference */
+    background: rgba(0, 0, 0, 0.4); /* Optional: adds a soft dark background behind the text */
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 3; /* Ensures the content is above the image */
+}
+
+.hero-content h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #00ddff;
+}
+
+.hero-content p {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.hero-content .btn {
+    padding: 0.8rem 1.5rem;
+    background-color: #00ddff;
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.hero-content .btn:hover {
+    background-color: #b18ce9;
+}
+
+
+/* Body Styling */
+body {
+    font-family: 'Orbitron', sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    padding-top: 4rem; 
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed; /* Ensures it stays at the top and over the hero */
+    top: 0;
+    width: 100%;
+    z-index: 100; /* Keeps it above other elements */
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    backdrop-filter: blur(5px); /* Optional: Adds a glassmorphism effect */
+    padding: 1rem; /* Adjust padding as needed */
+    transition: background 0.3s ease; /* Smooth transition on scroll */
+}
+
+body.scrolled nav {
+    background: rgba(0, 0, 0, 0.8); /* Darkens slightly when scrolling */
+}
+
+/* Left-aligned About Us Link */
+.nav-left {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.1rem;  /* Adjust spacing between the links */
+    width: auto;
+}
+
+.nav-left li a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.nav-left li a:hover {
+    color: #000000; /* Color on hover */
+}
+
+
+.nav-center li a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.nav-center li a:hover {
+    color: #b18ce9; /* Hover color */
+}
+
+nav a {
+    color: #000000; /* White text for visibility */
+    text-decoration: none;
+    margin: 0 1rem;
+    font-size: 1rem;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #f5f5f5;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #000000;
+}
+
+/* Product Grid */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    padding: 2rem;
+    position: relative;
+}
+.product {
+    background: rgba(31, 31, 31, 0.9); /* Slightly transparent dark background */
+    border: 1px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s;
+    position: relative; /* Ensure it stays above the blurred background */
+    z-index: 2; /* Ensure the product cards stay above the blurry backdrop */
+}
+/* Blurry Background for Products */
+.products::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* Dark overlay for the blur effect */
+    -webkit-backdrop-filter: blur(5px); /* Blurring effect */
+    backdrop-filter: blur(5px); /* For Safari compatibility */
+    z-index: 1; /* Ensures the blur effect is behind the content */
+}
+
+
+.product:hover {
+    transform: scale(1.05);
+}
+
+.product h2 {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin: 1rem 0;
+}
+
+.product p {
+    font-size: 1rem;
+    color: #bbb;
+}
+
+/* Buttons */
+button, a {
+    display: inline-block;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    color: #000000;
+    background: #00ddff;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+button:hover, a:hover {
+    background: #b18ce9;
+}
+
+/* Cart Table */
+table {
+    width: 90%;
+    margin: 1rem auto;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+    -webkit-backdrop-filter: blur(5px); /* Adds blur effect */
+    backdrop-filter: blur(5px); /* For Safari compatibility */
+    border-radius: 8px; /* Optional: rounded corners for the table */
+}
+
+table th, table td {
+    padding: 1rem;
+    border: 1px solid #444;
+    text-align: left;
+    background-color: rgba(255, 255, 255, 0.2); 
+}
+
+table th {
+    background: #000000;
+    color: #ffffff;
+}
+
+table td {
+    color: #fff;
+}
+/* Search Bar Styling */
+.search-bar {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Pushes it to the right */
+    gap: 1rem;
+}
+
+.search-bar input[type="text"] {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px; /* Adjust as needed */
+    outline: none;
+}
+
+.search-bar input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    width: 200px; /* Adjust as needed */
+}
+
+.search-bar button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #00ddff;
+    border: none;
+    border-radius: 5px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.search-bar button:hover {
+    background-color: #b18ce9;
+}
+
+/* About Us Styling */
+#about {
+    padding: 2rem;
+    background-color: #1e1e1e;
+    color: #fff;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+#about h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+#about p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+
