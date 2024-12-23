@@ -1,5 +1,6 @@
 <?php
 require_once '../includes/config.php';
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sanitize and validate user inputs
@@ -25,9 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $password_hashed);
 
-            // Execute the statement
             if ($stmt->execute()) {
-                echo "Registration successful! You can now <a href='login.php'>log in</a>.";
+                // Set session variables for the new user
+                $_SESSION['user_id'] = $conn->lastInsertId(); // Store the user ID
+                $_SESSION['username'] = $username;
+
+                // Redirect to the checkout page
+                header("Location: checkout.php");
+                exit;
             } else {
                 echo "Registration failed. Please try again.";
             }
@@ -53,9 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             padding: 2rem;
             border-radius: 10px;
             width: 100%;
-            max-width: 400px; /* Limit the form's width */
-            margin: 5rem auto; /* Center the form vertically and horizontally */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Soft shadow for the box */
+            max-width: 400px; 
+            margin: 5rem auto; 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
             text-align: center;
         }
 
