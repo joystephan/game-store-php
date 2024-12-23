@@ -27,21 +27,33 @@ if (!empty($_SESSION['cart'])) {
         $total_price += $item['price'] * $_SESSION['cart'][$item['product_id']];
     }
 }
-
 // Handle form submission for order placement
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = htmlspecialchars($_POST['name']);
-    $address = htmlspecialchars($_POST['address']);
-    $phone = htmlspecialchars($_POST['phone']);
     $user_id = $_SESSION['user_id'];
     $product_names = implode(', ', array_column($cart_items, 'name'));
 
     // Insert the order into the orders table
     $order_query = $conn->prepare("
-        INSERT INTO orders (user_id, product_name, total_price, name, address, phone)
-        VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO orders (user_id, product_name, total_price)
+        VALUES (?, ?, ?)
     ");
-    $order_query->execute([$user_id, $product_names, $total_price, $name, $address, $phone]);
+    $order_query->execute([$user_id, $product_names, $total_price]);
+
+    // Get the last inserted order ID
+    $order_id = $conn->lastInsertId();
+
+    // Insert order items into the order_items table
+    foreach ($cart_items as $item) {
+        $order_item_query = $conn->prepare("
+            INSERT INTO order_items (order_id, product_id, quantity)
+            VALUES (?, ?, ?)
+        ");
+        $order_item_query->execute([
+            $order_id,
+            $item['product_id'],
+            $_SESSION['cart'][$item['product_id']]
+        ]);
+    }
 
     // Clear the cart after successful checkout
     unset($_SESSION['cart']);
@@ -74,11 +86,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 2px solid #00ddff;
+        }
+        h1{
+            text-align: center;
+            color: white;
         }
 
-        h1, h2 {
+        h2 {
             text-align: center;
-            color: #f39c12;
+            color: #00ddff;
         }
 
         table {
@@ -111,27 +128,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-weight: bold;
         }
 
+        form input[type="text"]:focus, 
+        form input[type="number"]:focus {
+            border-color: #b18ce9; /* Change border color when focused */
+            outline: none; /* Remove default focus outline */
+        }
+
         form input[type="text"], form input[type="number"] {
             padding: 10px;
             margin-top: 5px;
-            border: none;
+            border: 2px solid #00ddff; 
             border-radius: 5px;
             width: 100%;
+            
         }
 
         .btn {
             margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #f39c12;
-            color: #fff;
+            padding: 8px 16px;
+            height: 40px;
+            background-color: #00ddff;
+            color: black;
             text-align: center;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            width: 150px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            font-size: 16px;
         }
 
         .btn:hover {
-            background-color: #e67e22;
+            background-color: #b18ce9;
         }
     </style>
 </head>
@@ -159,7 +189,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <?php endforeach; ?>
             </tbody>
         </table>
-        <p><strong>Total Price:</strong> $<?php echo number_format($total_price, 2); ?></p>
+
+        <p>
+          <span style="color: #00ddff;"><strong>Total Price:</strong></span> $<?php echo number_format($total_price, 2);?>
+        </p>
 
         <h2>Shipping Information</h2>
         <form method="POST">

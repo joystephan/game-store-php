@@ -2,13 +2,23 @@
 // functions.php
 require_once 'config.php';
 
-// Fetch all products
-function getAllProducts() {
+// Fetch all categories
+function getAllCategories() {
     global $conn;
-    $stmt = $conn->prepare("SELECT * FROM products");
+    $stmt = $conn->prepare("SELECT * FROM categories");
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+// Fetch all products with their categories
+function getAllProducts() {
+    global $conn;
+    $stmt = $conn->prepare("SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.category_id");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
 // Fetch product by ID
 function getProductById($id) {
@@ -23,14 +33,14 @@ function getProductById($id) {
 function loginUser($email, $password) {
     global $conn;
 
-     // Prepare and execute the query to fetch the user by email
+    // Prepare and execute the query to fetch the user by email
     $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
     $stmt->bindParam(':email', $email, PDO::PARAM_STR);
     $stmt->execute();
 
-    // Fetch the user data from the database
+// Fetch the user data from the database
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
 
     if ($user) {
         // Log the entered password and stored password hash for debugging
@@ -57,12 +67,12 @@ function loginUser($email, $password) {
 function registerUser($username, $email, $password) {
     global $conn;
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-    $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
+$stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':email', $email);
     $stmt->bindParam(':password', $hashedPassword);
     $stmt->execute();
-    return $conn->lastInsertId();
+return $conn->lastInsertId();
 }
 
 function searchProducts($query) {

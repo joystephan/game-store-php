@@ -9,13 +9,19 @@
         .thank-you-container {
             text-align: center;
             margin: 100px auto;
-            padding: 20px;
+            padding: 30px;
             background-color: #121212;
             color: white;
-            border: 1px solid #333;
+            border: 2px solid #00ddff; 
             border-radius: 10px;
-            width: 50%;
+            width: 70%;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .thank-you-container:hover {
+            transform: scale(1.1); /* Slightly enlarge the container */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); /* Enhance the shadow */
         }
 
         .thank-you-container h1 {
@@ -29,17 +35,18 @@
         }
 
         .thank-you-container .btn {
-            background-color: #f39c12;
+            background-color: #00ddff;
             padding: 10px 20px;
-            color: white;
+            color: black;
             text-decoration: none;
             border-radius: 5px;
             font-size: 1.1rem;
         }
 
         .thank-you-container .btn:hover {
-            background-color: #e67e22;
+            background-color: #b18ce9;
         }
+        
     </style>
 </head>
 <body>

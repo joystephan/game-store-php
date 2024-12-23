@@ -3,6 +3,7 @@
 require_once './includes/functions.php';
 
 $products = getAllProducts();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +31,7 @@ $products = getAllProducts();
     
     <!-- Hero section with the featured image -->
     <section class="hero">
-        <img src="assets/gaming.jpeg" alt="Featured Gaming image" class="hero-image">
+        <img src="assets/gaming.jpg" alt="Featured Gaming image" class="hero-image">
     </section>
 
     <div class="hero-content">

@@ -204,6 +204,25 @@ if ($related_products_stmt) {
                 margin-right: 0;
             }
         }
+
+         .back-to-shop {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .back-to-shop .btn {
+            background-color: #00ddff;
+            color: black;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .back-to-shop .btn:hover {
+            background-color: #b18ce9;
+        }
+
     </style>
 </head>
 <body>
@@ -218,7 +237,9 @@ if ($related_products_stmt) {
 
     <div class="container">
         <div class="product-image">
-         <img src="<?php echo htmlspecialchars($product['image_url'] ? $product['image_url'] : 'default_image.jpg'); ?>" alt="<?php echo htmlspecialchars($product['name'] ? $product['name'] : 'Unknown Product'); ?>">
+        <img src="../<?php echo htmlspecialchars($product['image_url'] ?? 'assets/default_image.jpg'); ?>" 
+     alt="<?php echo htmlspecialchars($product['name'] ?? 'Unknown Product'); ?>">
+
 
         </div>
         <div class="product-details">
@@ -235,12 +256,15 @@ if ($related_products_stmt) {
         </div>
     </div>
 
+    <div class="back-to-shop">
+        <a href="../index.php#shop-now" class="btn">Back to Shop Now</a>
+    </div>
+    
     <div class="related-products">
-        <h2>Related Products</h2>
+        <h2>Related Products:</h2>
         <div class="product-card-container">
         <?php foreach ($related_products as $related_product): ?>
             <div class="product-card">
-                <img src="<?php echo htmlspecialchars($related_product['image_url'] ? $related_product['image_url'] : 'default_image.jpg'); ?>" alt="<?php echo htmlspecialchars($related_product['name'] ? $related_product['name'] : 'Unknown Product'); ?>">
                 <div class="name"><?php echo htmlspecialchars($related_product['name'] ? $related_product['name'] : 'Unknown Product'); ?></div>
                 <div class="price">$<?php echo number_format($related_product['price'], 2); ?></div>
                 <a href="product.php?id=<?php echo $related_product['product_id']; ?>">View Details</a>
@@ -249,6 +273,5 @@ if ($related_products_stmt) {
 
         </div>
     </div>
-
 </body>
 </html>

@@ -20,9 +20,18 @@ if (isset($_GET['query'])) {
         <?php if (!empty($searchResults)): ?>
             <?php foreach ($searchResults as $product): ?>
                 <div class="product">
-                    <h2><?php echo htmlspecialchars($product['name']); ?></h2>
-                    <p>Price: $<?php echo htmlspecialchars($product['price']); ?></p>
-                    <a href="pages/product.php?id=<?php echo $product['product_id']; ?>">View Details</a>
+                    
+                    <!-- Product image on the left -->
+                    <div class="product-image-container">
+                        <img src="./<?php echo htmlspecialchars($product['image_url'] ?? 'assets/default_image.jpg'); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="product-image">
+                    </div>
+                    <!-- Product details on the right -->
+                    <div class="product-details">
+                        <h2><?php echo htmlspecialchars($product['name']); ?></h2>
+                        <p>Price: $<?php echo htmlspecialchars($product['price']); ?></p>
+                        <a href="pages/product.php?id=<?php echo $product['product_id']; ?>">View Details</a>
+                    </div>
+                    
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
